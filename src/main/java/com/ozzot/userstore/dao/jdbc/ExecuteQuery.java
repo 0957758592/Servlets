@@ -31,7 +31,7 @@ public class ExecuteQuery {
                             new User(resultSet.getInt("userId"),
                                     resultSet.getString("firstName"),
                                     resultSet.getString("lastName"),
-                                    resultSet.getDate(i).toLocalDate(),
+                                    resultSet.getDate("birth").toLocalDate(),
                                     resultSet.getString("email"),
                                     resultSet.getString("phoneNumber")));
                 }

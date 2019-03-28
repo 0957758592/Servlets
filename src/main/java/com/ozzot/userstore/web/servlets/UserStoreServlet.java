@@ -2,6 +2,7 @@ package com.ozzot.userstore.web.servlets;
 
 import com.ozzot.userstore.dao.jdbc.ExecuteQuery;
 import com.ozzot.userstore.web.templator.PageGenerator;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.ozzot.userstore.utils.Constants.FORMATTER;
@@ -68,22 +67,14 @@ public class UserStoreServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
 
-        List<String> list = new ArrayList<>();
+        JSONObject object = new JSONObject(reader.readLine());
 
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.contains("name")) {
-                reader.readLine();
-                list.add(reader.readLine());
-            }
-        }
-
-        String name = list.get(0);
-        String lastName = list.get(1);
-        LocalDate birth = LocalDate.parse(list.get(2), FORMATTER);
-        String email = list.get(3);
-        String phone = list.get(4);
-        int id = Integer.parseInt(list.get(5));
+        String name = (String) object.get("firstName");
+        String lastName = (String) object.get("lastName");
+        LocalDate birth = LocalDate.parse((CharSequence) object.get("birth"), FORMATTER);
+        String email = (String) object.get("email");
+        String phone = (String) object.get("phone");
+        int id = Integer.parseInt(String.valueOf(object.get("id")));
 
         ExecuteQuery.update(name, lastName, birth, email, phone, id);
 

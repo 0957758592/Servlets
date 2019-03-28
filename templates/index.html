@@ -92,7 +92,7 @@
                                 <div class="modal-footer">
                                     <input type="hidden" name="id" value="${user.userId}">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button id="button_${user.userId}" type="submit" class="btn btn-success">Update
+                                    <button id="button_${user.userId}" type="button" class="btn btn-success">Update
                                         User
                                     </button>
                                 </div>
@@ -114,19 +114,28 @@
         <script>
 
             document.getElementById("button_${user.userId}").addEventListener('click', function () {
-                // создать объект для формы
                 var formData = new FormData(document.forms.users__${user.userId});
-
-                // добавить к пересылке ещё пару ключ - значение
-                // formData.append("x", "xxx");
-
-                // отослать
-                var xhr = new XMLHttpRequest();
-                xhr.open("PUT", "/users/");
-
-                xhr.send(formData);
-                window.location.reload();
+                var object = {}
+                formData.forEach((value, key) => {object[key] = value});
+                var json = JSON.stringify(object);
+                sendData(json);
             })
+
+            sendData = (jsonObject) => {
+                $.ajax({
+                    url: '/users/',
+                    type: 'PUT',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: jsonObject,
+                    success: function(data, status, jqXHR){
+                        window.location.reload();
+                    },
+                    error: function(jqXHR, status, errorThrown){
+                        window.location.reload();
+                    },
+                })
+            }
 
         </script>
 
