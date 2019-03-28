@@ -1,7 +1,7 @@
-package com.ozzot.servlets;
+package com.ozzot.userstore.web.servlets;
 
-import com.ozzot.jdbc.ExecuteQuery;
-import com.ozzot.templates.PageGenerator;
+import com.ozzot.userstore.dao.jdbc.ExecuteQuery;
+import com.ozzot.userstore.web.templator.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +26,5 @@ public class SelectUserServlet extends HttpServlet {
         }
 
         resp.getWriter().write(PageGenerator.instance().getPage("user.html", user));
-
     }
 }

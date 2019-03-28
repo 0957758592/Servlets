@@ -1,7 +1,7 @@
-package com.ozzot.server;
+package com.ozzot.userstore;
 
-import com.ozzot.servlets.SelectUserServlet;
-import com.ozzot.servlets.UserStoreServlet;
+import com.ozzot.userstore.web.servlets.SelectUserServlet;
+import com.ozzot.userstore.web.servlets.UserStoreServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;

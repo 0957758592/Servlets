@@ -1,4 +1,4 @@
-package com.ozzot.templates;
+package com.ozzot.userstore.web.templator;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class PageGenerator {
-    private static final String HTML_DIR = "users";
+    private static final String HTML_DIR = "templates";
 
     private static PageGenerator pageGenerator;
     private final Configuration cfg;

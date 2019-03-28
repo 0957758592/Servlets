@@ -1,4 +1,4 @@
-package com.ozzot.entity;
+package com.ozzot.userstore.entity;
 
 import java.time.LocalDate;
 

@@ -1,19 +1,19 @@
-package com.ozzot.jdbc;
+package com.ozzot.userstore.dao.jdbc;
 
-import com.ozzot.entity.User;
+import com.ozzot.userstore.entity.User;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ozzot.utils.Constants.*;
+import static com.ozzot.userstore.utils.Constants.*;
 
 public class ExecuteQuery {
 
     public static Object getAll() throws SQLException {
 
-        List<User> usersList = null;
+        List<User> usersList;
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement();
@@ -73,28 +73,39 @@ public class ExecuteQuery {
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(ADD_USER)) {
-            statement.setString(1, name);
-            statement.setString(2, lastName);
-            statement.setDate(3, Date.valueOf(birth));
-            statement.setString(4, email);
-            statement.setString(5, phone);
-
-            int id = statement.executeUpdate();
-
-            System.out.println(id);
+            setPreparedStatement(statement, name, lastName, birth, email, phone);
+            statement.executeUpdate();
         }
     }
+
 
     public static void deleteUser(int id) throws SQLException {
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(DELETE)) {
             statement.setInt(1, id);
-
-            int deletedUser = statement.executeUpdate();
-
-            System.out.println(deletedUser);
-
+            statement.executeUpdate();
         }
     }
+
+    public static void update(String name, String lastName, LocalDate birth, String email, String phone, int id) {
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+            setPreparedStatement(statement, name, lastName, birth, email, phone);
+            statement.setInt(6, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    private static void setPreparedStatement(PreparedStatement statement, String name, String lastName, LocalDate birth, String email, String phone) throws SQLException {
+        statement.setString(1, name);
+        statement.setString(2, lastName);
+        statement.setDate(3, Date.valueOf(birth));
+        statement.setString(4, email);
+        statement.setString(5, phone);
+    }
+
 }
